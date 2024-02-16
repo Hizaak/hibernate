@@ -2,48 +2,48 @@
 
 ## Description
 
-Hibernate est un petit utilitaire écrit en C permettant de mettre en hibernation votre système Linux de manière simple et efficace. Ce programme est conçu pour être utilisé en ligne de commande et peut être utile pour économiser de l'énergie sur des systèmes embarqués ou pour automatiser des tâches. Il a été à l'origine développé car la mise en hibernation de mon ordinateur portable ne fonctionnait pas correctement avec les outils par défaut de ma distribution Linux (Arch Linux/Manjaro, 
+Hibernate is a small utility written in C that allows you to hibernate your Linux system in a simple and efficient manner. This program is designed to be used in the command line and can be useful for saving energy on embedded systems or automating tasks. It was originally developed because hibernating my laptop was not working properly with the default tools of my Linux distribution (Arch Linux/Manjaro).
 
 ## Installation
 
-### Prérequis
+### Prerequisites
 
-Assurez-vous d'avoir les éléments suivants installés sur votre système :
+Make sure you have the following installed on your system:
 
-- `gcc` (GNU Compiler Collection) pour la compilation du code C.
-- `git` pour cloner le dépôt.
+- `gcc` (GNU Compiler Collection) for compiling C code.
+- `git` for cloning the repository.
 
-### Installation rapide
+### Quick Installation
 
-Exécutez la commande suivante dans votre terminal pour installer Hibernate en une seule ligne :
+Run the following command in your terminal to install Hibernate in a single line:
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/hizaak/hibernate/master/install.sh | sudo bash
 ```
 
-Cette commande télécharge le script d'installation depuis ce dépôt GitHub et l'exécute automatiquement pour installer Hibernate sur votre système. Assurez-vous de comprendre les implications de l'exécution de scripts depuis Internet avant de lancer cette commande.
+This command downloads the installation script from this GitHub repository and automatically executes it to install Hibernate on your system. Make sure you understand the implications of running scripts from the internet before executing this command.
 
-## Utilisation
+## Usage
 
-Une fois installé, vous pouvez utiliser Hibernate en exécutant la commande suivante dans votre terminal :
+Once installed, you can use Hibernate by running the following command in your terminal:
 
 ```bash
 sudo hibernate <state>
 ```
 
-Voici les états disponibles pour Hibernate :
-- freeze / s2idle : Mettre le système en hibernation.
-- mem : Mettre le système en hibernation en sauvegardant l'état de la mémoire.
-- standby /shallow : Mettre le système en veille prolongée.
-- disk : Mettre le système en hibernation en sauvegardant l'état de la mémoire sur le disque.
-- deep : Mettre le système en hibernation en sauvegardant l'état de la mémoire sur le disque et en coupant l'alimentation.
+Here are the available states for Hibernate:
+- freeze / s2idle: Puts the system into hibernation.
+- mem: Puts the system into hibernation by saving the memory state.
+- standby / shallow: Puts the system into extended sleep.
+- disk: Puts the system into hibernation by saving the memory state to disk.
+- deep: Puts the system into hibernation by saving the memory state to disk and cutting off power.
 
-Tous les états ne sont pas disponibles sur tous les systèmes. Vous pouvez vérifier les états disponibles sur votre système en exécutant la commande `cat /sys/power/state` dans votre terminal.
+Not all states are available on all systems. You can check the available states on your system by running the command `cat /sys/power/state` in your terminal.
 
-Documentation sur les états de veille du noyau Linux :
+Documentation on Linux kernel sleep states:
 - [https://www.kernel.org/doc/html/latest/admin-guide/pm/sleep-states.html](https://www.kernel.org/doc/html/latest/admin-guide/pm/sleep-states.html)
 - [https://www.kernel.org/doc/Documentation/power/states.txt](https://www.kernel.org/doc/Documentation/power/states.txt)
 
 ## Contributions
 
-Les contributions sous forme de rapports de bogues, de demandes d'extraction et d'améliorations sont les bienvenues ! N'hésitez pas à ouvrir une issue ou à envoyer une pull request.
+Contributions in the form of bug reports, pull requests, and enhancements are welcome! Feel free to open an issue or send a pull request.

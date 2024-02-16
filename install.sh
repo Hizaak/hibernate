@@ -2,65 +2,64 @@
 
 url="https://github.com/hizaak/hibernate.git"
 
-# Vérifier si l'utilisateur est root
+# Check if the user is root
 if [ "$(id -u)" -ne 0 ]; then
-    echo "Ce script nécessite des privilèges root pour être exécuté."
+    echo "This script requires root privileges to run."
     exit 1
 fi
 
-# Vérifier si le paquet git est installé
+# Check if the git package is installed
 if ! command -v git &> /dev/null; then
-    echo "Git n'est pas installé."
+    echo "Git is not installed."
     exit 1
 fi
 
-# Vérifier que le paquet gcc est installé, mais sans dpkg car il n'est pas installé par défaut sur les systèmes non basés sur Debian
+# Check if the gcc package is installed, excluding dpkg since it's not installed by default on non-Debian based systems
 if ! command -v gcc &> /dev/null; then
-    echo "GCC n'est pas installé."
+    echo "GCC is not installed."
     exit 1
 fi
 
-# Cloner le dépôt
+# Clone the repository
 if ! git clone $url; then
-    echo "Le clonage du dépôt a échoué."
+    echo "Cloning the repository failed."
     exit 1
 else
-    echo "Le dépôt a été cloné avec succès."
+    echo "Repository cloned successfully."
 fi
 
 cd hibernate || exit 1
 
-# Vérifier si le script hibernate.c existe
+# Check if the hibernate.c script exists
 if [ ! -f hibernate.c ]; then
-    echo "Le fichier hibernate.c n'existe pas."
+    echo "The hibernate.c file does not exist."
     exit 1
 fi
 
-
-# Compiler le script hibernate.c
+# Compile the hibernate.c script
 if ! gcc hibernate.c -o hibernate; then
-    echo "La compilation du script a échoué."
+    echo "Compilation of the script failed."
     exit 1
 else
-    echo "Le script a été compilé avec succès."
+    echo "Script compiled successfully."
 fi
 
-# Vérifier si la copie s'est bien déroulée
+# Check if copying was successful
 if ! cp hibernate /usr/bin/; then
-    echo "La copie du script a échoué."
+    echo "Copying the script failed."
     exit 1
 else
-    echo "Le script a été copié avec succès."
+    echo "Script copied successfully."
 fi
 
-# Supprimer le dossier hibernate
+# Remove the hibernate folder
 cd .. || exit 1
 
 if ! rm -rf hibernate; then
-    echo "La suppression du dossier hibernate a échoué."
+    echo "Removing the hibernate folder failed."
     exit 1
 else
-    echo "Le dossier hibernate a été supprimé avec succès."
+    echo "Hibernate folder removed successfully."
 fi
 
-echo "Le script a été installé avec succès."
+echo "The script has been installed successfully."

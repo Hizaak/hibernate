@@ -7,25 +7,25 @@
 #include <string.h>
 
 int main(int argc, char *argv[]) {
-    // Vérifier si l'utilisateur est root
+    // Check if the user is root
     if (getuid() != 0) {
-        fprintf(stderr, "Ce script nécessite des privilèges root pour exécuter.\n");
+        fprintf(stderr, "This script requires root privileges to execute.\n");
         return 1;
     }
 
-    // Vérifier s'il y a un argument fourni
+    // Check if an argument is provided
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <state>\n", argv[0]);
-        fprintf(stderr, "Les paramètres valides sont :\n");
+        fprintf(stderr, "Valid parameters are:\n");
 
-        // Ouvrir le fichier /sys/power/state
+        // Open the file /sys/power/state
         FILE *file = fopen("/sys/power/state", "r");
         if (file == NULL) {
-            perror("Erreur lors de l'ouverture de /sys/power/state");
+            perror("Error opening /sys/power/state");
             return 1;
         }
 
-        // Lire et afficher le contenu du fichier
+        // Read and display the contents of the file
         char buffer[100];
         while (fgets(buffer, sizeof(buffer), file) != NULL) {
             printf("%s", buffer);
@@ -35,20 +35,20 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // Récupérer le paramètre fourni en argument
+    // Get the provided argument
     char *state = argv[1];
 
-    // Vérifier si l'état existe dans /sys/power/state
+    // Check if the state exists in /sys/power/state
     char buffer[100];
     FILE *file = fopen("/sys/power/state", "r");
     if (file == NULL) {
-        perror("Erreur lors de l'ouverture de /sys/power/state");
+        perror("Error opening /sys/power/state");
         return 1;
     }
 
     int found = 0;
     while (fgets(buffer, sizeof(buffer), file) != NULL) {
-        // Comparer l'état fourni avec chaque ligne du fichier
+        // Compare the provided state with each line in the file
         if (strstr(buffer, state) != NULL) {
             found = 1;
             break;
@@ -58,19 +58,19 @@ int main(int argc, char *argv[]) {
     fclose(file);
 
     if (!found) {
-        fprintf(stderr, "Le paramètre '%s' n'existe pas dans /sys/power/state.\n", state);
+        fprintf(stderr, "The parameter '%s' does not exist in /sys/power/state.\n", state);
         return 1;
     }
 
-    // Exécuter la commande pour mettre le système dans l'état spécifié
+    // Execute the command to put the system into the specified state
     int fd = open("/sys/power/state", O_WRONLY);
     if (fd == -1) {
-        perror("Erreur lors de l'ouverture de /sys/power/state");
+        perror("Error opening /sys/power/state");
         return 1;
     }
 
     if (write(fd, state, strlen(state)) == -1) {
-        perror("Erreur lors de l'écriture dans /sys/power/state");
+        perror("Error writing to /sys/power/state");
         close(fd);
         return 1;
     }
